@@ -1,0 +1,8 @@
+{
+    "template": {
+        "startTag": "<template>",
+        "endTag": "</template>"
+    },
+    "values": {
+    }
+}
