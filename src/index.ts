@@ -1,10 +1,9 @@
-import { ConfigGenerator } from "@/config/ConfigGenerator"
-import type { Config } from "@/config/Config"
+import { parseConfig, type Config } from "@/config/config"
 import { wrapError } from "@/utils/wrapError"
 function main() {
     let config: Config;
     try {
-        config = new ConfigGenerator().generate(process.argv);
+        config = parseConfig();
     } catch(e) {
         throw wrapError(e, "Failed to generate config")
     }
