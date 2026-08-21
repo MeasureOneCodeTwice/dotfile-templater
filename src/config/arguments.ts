@@ -1,6 +1,6 @@
-import z from 'zod'
+import z from "zod";
 import commandLineArgs from "command-line-args";
-import { file, directory } from './zod/types'
+import { file, directory } from "./zod/types";
 
 const argumentDefinitions = [
   { name: "valuesFile", type: String, defaultValue: "values.json" },
@@ -16,5 +16,5 @@ const argumentsSchema = z.object({
 export type Arguments = z.infer<typeof argumentsSchema>;
 
 export function parseArguments(): Arguments {
-  return argumentsSchema.parse(commandLineArgs(argumentDefinitions)); 
+  return argumentsSchema.parse(commandLineArgs(argumentDefinitions));
 }

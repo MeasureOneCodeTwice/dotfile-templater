@@ -1,22 +1,25 @@
-import { parseConfig, type Config } from "@/config/config"
-import { wrapError } from "@/utils/wrapError"
-function main() {
-    let config: Config;
-    try {
-        config = parseConfig();
-    } catch(e) {
-        throw wrapError(e, "Failed to generate config")
-    }
+import { parseConfig, type Config } from "@/config";
+import { ApplicationError } from "@/utils/applicationError";
+import { recursiveFileIterator } from "@/templater/recursiveFileIterator";
 
-    console.log(config)
+function main() {
+  let config: Config;
+  try {
+    config = parseConfig();
+  } catch (e) {
+    const error = ApplicationError.fromError(e);
+    throw error.annotate("Failed to generate config");
+  }
+
+  const files = recursiveFileIterator(config.templateDirectory);
+  for (const file of files) {
+    console.log(file);
+  }
 }
 
 try {
-    main();
+  main();
 } catch (e) {
-    if(e instanceof Error)
-        console.error(e.message);
-    else
-        console.error(e);
+  if (e instanceof Error) console.error(e.message);
+  else console.error(e);
 }
-

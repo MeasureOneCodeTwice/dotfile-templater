@@ -1,4 +1,4 @@
-import { wrapError } from "@/utils/wrapError";
+import { ApplicationError } from "@/utils/applicationError";
 import fs from "node:fs";
 
 export function loadJSONFile(filepath: string): Object {
@@ -6,12 +6,16 @@ export function loadJSONFile(filepath: string): Object {
   try {
     fileContent = fs.readFileSync(filepath, { encoding: "utf-8" });
   } catch (e) {
-    throw wrapError(e, `Could not read file "${filepath}"`);
+    throw ApplicationError.fromError(e).annotate(
+      `Could not read file "${filepath}"`,
+    );
   }
 
   try {
     return JSON.parse(fileContent);
   } catch (e) {
-    throw wrapError(e, `Could not parse ${filepath} to JSON`);
+    throw ApplicationError.fromError(e).annotate(
+      `Could not parse ${filepath} to JSON`,
+    );
   }
 }

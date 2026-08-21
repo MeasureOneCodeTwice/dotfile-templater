@@ -1,8 +1,7 @@
 {
-    "template": {
-        "startTag": "<template>",
-        "endTag": "</template>"
-    },
-    "values": {
-    }
+  "template": {
+    "startTag": "<template>",
+    "endTag": "</template>"
+  },
+  "values": {}
 }

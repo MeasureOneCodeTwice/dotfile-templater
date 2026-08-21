@@ -1,18 +1,20 @@
 import { loadJSONFile } from "@/utils/loadJSONFile";
-import { wrapError } from "@/utils/wrapError";
-import { parseArguments, type Arguments } from './arguments' 
-import { parseValuesConfig, type ValuesConfig } from './values' 
+import { ApplicationError } from "@/utils/applicationError";
+import { parseArguments, type Arguments } from "./arguments";
+import { parseValuesConfig, type ValuesConfig } from "./values";
 
 export type Config = Arguments & ValuesConfig;
 
 export function parseConfig(): Config {
   const args: Arguments = parseArguments();
 
-  let valuesConfigRaw; 
+  let valuesConfigRaw;
   try {
     valuesConfigRaw = loadJSONFile(args.valuesFile);
   } catch (e) {
-    throw wrapError(e, `Could not parse values file "${args.valuesFile}"`);
+    throw ApplicationError.fromError(e).annotate(
+      `Could not parse values file "${args.valuesFile}"`,
+    );
   }
   const values: ValuesConfig = parseValuesConfig(valuesConfigRaw);
 
